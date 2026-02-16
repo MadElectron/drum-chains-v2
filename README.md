@@ -1,48 +1,54 @@
-# drum-chains-v2
+# Drum Chains v.2
 
-This template should help get you started developing with Vue 3 in Vite.
+Proposal Vue 3 app for drum chains training.
 
-## Recommended IDE Setup
+## Для чего это приложение
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Для тренировки барабанных цепочек в комфортном темпе онлайн.
 
-## Recommended Browser Setup
+## Для кого это приложение
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+Для начинающих барабанщиков.
 
-## Type Support for `.vue` Imports in TS
+## Фичи проекта в случайном порядке
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+- Выбор цепочки
+  - В случайном порядке
+  - Парадиддл (lrll rlrr) как демо-цепочка
+  - Режимы: только руки/только ноги/вперемежку/руки+ноги
+  - Настраиваемая сложность: выражается в однородности сочетаний
+  - Настраиваемое возрастание сложности
+- Метроном
+  - Звук метронома: по опыту очень грузит систему
+  - Инпут метронома
+  - Колёсико метронома
+  - Клавиатура метронома
+- Отображение цепочки
+  - Анимация смены цепочки
+  - Иконка руки/ноги у текущего элемента цепочки
+- About
+  - Текст с картинками, как тренировать цепочки
+  - Картинки попробовать нагенерить нейронками
+- Авторы
+  - Про меня
+  - Потом можно и донат прикуртить
+- Смена языка
+  - Сделать строки переменными, потом прикрутить английский язык
 
-## Customize configuration
+## Структура
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
 ```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+App
+|-- HomeView
+    |-- DrumChain
+        |-- DrumChainGroup (4xElements)
+            |-- DrumChainElement
+                |-- Character (l/r/L/R)
+                |-- Icon (arm/leg)
+    |-- NextChain
+    |-- Metronome
+        |-- MetronomeInput
+        |-- MetronomeKeyboard
+        |-- MetronomeWheel
+    |-- LayoutSwitch(1/2/4 groups)
 ```

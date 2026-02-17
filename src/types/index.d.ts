@@ -6,6 +6,7 @@ import type { D } from 'vue-router/dist/index-Cu9B0wDz.mjs'
 export type Playback = {
   active: number
   isPlayed: boolean
+  count: number
   tempo: number
 }
 

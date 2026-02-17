@@ -7,6 +7,7 @@ export const usePlaybackStore = defineStore('playback', () => {
   const playback = reactive<Playback>({
     active: 0,
     isPlayed: false,
+    count: 0,
     tempo: 60,
   })
 
@@ -20,6 +21,7 @@ export const usePlaybackStore = defineStore('playback', () => {
   const popChain = () => {
     currentChain.value = nextChain.value
     nextChain.value = makeRandomChain(4, [1, 2])
+    playback.count++
   }
 
   const playNext = () => {

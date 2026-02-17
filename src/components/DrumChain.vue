@@ -1,5 +1,5 @@
 <template>
-  <div class="grid">
+  <div class="grid" :class="{ playing }">
     <!-- TODO: Hand-with-drumstick icon -->
     <DrumChainElement
       class="arm"
@@ -21,14 +21,15 @@
 
 <script setup lang="ts">
 import type { DrumChain, LimbCombination } from '@/types'
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import DrumChainElement from '@/components/DrumChainElement.vue'
 import { usePlaybackStore } from '@/stores/playback'
 import { storeToRefs } from 'pinia'
 import { separateLimb } from '@/utils/helpers'
-import { play } from '@/composables/playback'
 
-const props = defineProps<{ chain: DrumChain | [] }>()
+const props = withDefaults(defineProps<{ chain: DrumChain | []; playing?: boolean }>(), {
+  playing: false,
+})
 
 const arms = computed<LimbCombination[]>(() => separateLimb(props.chain as DrumChain, 'arm'))
 const legs = computed<LimbCombination[]>(() => separateLimb(props.chain as DrumChain, 'leg'))
@@ -36,11 +37,7 @@ const legs = computed<LimbCombination[]>(() => separateLimb(props.chain as DrumC
 const store = usePlaybackStore()
 const { playback } = storeToRefs(store)
 
-const isActive = (idx: number): boolean => playback.value.active === idx
-
-onMounted(() => {
-  play()
-})
+const isActive = (idx: number): boolean => props.playing && playback.value.active === idx
 </script>
 
 <style lang="scss" scoped>
@@ -48,5 +45,9 @@ onMounted(() => {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, fr);
+
+  &:not(.playing) {
+    opacity: 0;
+  }
 }
 </style>

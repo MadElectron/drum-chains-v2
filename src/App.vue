@@ -41,6 +41,7 @@ body {
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
+  overflow-x: hidden;
 
   & > .el-container {
     width: 100%;

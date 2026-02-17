@@ -13,6 +13,7 @@ export type Playback = {
   tempo: number
 }
 
+export type LimbChar = 'L' | 'R' | 'l' | 'r'
 export type LimbCombination = 'L' | 'R' | 'LR' | ''
 export type DrumHitArms = [] | ['l'] | ['r'] | ['l', 'r']
 export type DrumHitLeg = [] | ['L'] | ['R'] | ['L', 'R']

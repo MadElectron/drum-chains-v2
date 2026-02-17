@@ -6,25 +6,25 @@
 </template>
 
 <script setup lang="ts">
-import type { DrumChain, LimbCombination } from '@/types'
+import type { DrumChain, LimbChar, LimbCombination } from '@/types'
 import { computed } from 'vue'
 import DrumChainElement from '@/components/DrumChainElement.vue'
 
 const props = defineProps<{ chain: DrumChain | [] }>()
 
-const arms = computed<LimbCombination[]>(() =>
-  props.chain.map((el) =>
-    el[0].reduce(
-      (acc: LimbCombination, char: 'l' | 'r') => (acc + char.toUpperCase()) as LimbCombination,
+const arms = computed<LimbCombination[]>(() => separateLimb(props.chain as DrumChain, 'arm'))
+const legs = computed<LimbCombination[]>(() => separateLimb(props.chain as DrumChain, 'leg'))
+
+const separateLimb = (chain: DrumChain, limb: 'arm' | 'leg'): LimbCombination[] => {
+  const idx = Number(limb === 'leg') as 0 | 1
+
+  return chain.map((el) =>
+    el[idx].reduce(
+      (acc: LimbCombination, char: LimbChar) => (acc + char.toUpperCase()) as LimbCombination,
       '',
     ),
-  ),
-)
-const legs = computed<LimbCombination[]>(() =>
-  props.chain.map((el) =>
-    el[1].reduce((acc: LimbCombination, char: 'L' | 'R') => (acc + char) as LimbCombination, ''),
-  ),
-)
+  )
+}
 </script>
 
 <style lang="scss" scoped>

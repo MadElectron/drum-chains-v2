@@ -2,6 +2,7 @@
   <el-container direction="vertical">
     <h1>Играй!</h1>
     <DrumChain v-if="currentChain" :chain="currentChain" />
+    <!-- <DrumChain v-if="nextChain" :chain="nextChain" /> -->
   </el-container>
 </template>
 
@@ -16,7 +17,7 @@ const { currentChain } = storeToRefs(store)
 // Test
 // TODO: chain should start on play button press
 onMounted(() => {
-  store.setCurrentChain()
+  store.initChains()
 })
 </script>
 

@@ -1,32 +1,36 @@
 import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Playback, DrumChain } from '@/types'
-import { makeHit } from '@/utils/hitModel'
-import { el } from 'element-plus/es/locales.mjs'
+import { makeRandomChain } from '@/utils/hitModel'
 
 export const usePlaybackStore = defineStore('playback', () => {
   const playback = reactive<Playback>({
-    active: {
-      col: 0,
-      el: 0,
-      chain: 0,
-    },
+    active: 0,
     isPlayed: false,
     tempo: 60,
   })
 
   const currentChain = ref<DrumChain | null>(null)
+  const nextChain = ref<DrumChain | null>(null)
 
-  const setCurrentChain = () => {
-    const chain: DrumChain = Array.from({ length: 4 }, () => makeHit([1, 2])) as DrumChain
-    currentChain.value = chain
+  const initChains = () => {
+    currentChain.value = makeRandomChain(4, [1, 2])
+    nextChain.value = makeRandomChain(4, [1, 2])
+  }
+  const popChain = () => {
+    currentChain.value = nextChain.value
+    nextChain.value = makeRandomChain(4, [1, 2])
   }
 
   const playNext = () => {
     if (currentChain.value) {
-      playback.active.el = (playback.active.el + 1) % 4
+      playback.active = (playback.active + 1) % 4
+
+      if (playback.active === 0) {
+        popChain()
+      }
     }
   }
 
-  return { playback, currentChain, setCurrentChain, playNext }
+  return { playback, currentChain, nextChain, initChains, popChain, playNext }
 })

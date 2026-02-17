@@ -1,4 +1,4 @@
-import type { DrumHit } from '@/types'
+import type { DrumChain, DrumHit } from '@/types'
 
 /**
  * Contains key-value pairs for hit model
@@ -91,3 +91,16 @@ export const makeHit = (complexityLevels: number[]): DrumHit => {
 
   return decodeHit(hitCode)
 }
+
+/**
+ * Generates a random DrumChain object based on the provided complexity levels.
+ *
+ * The complexity levels are used to generate a DrumChain of the given length.
+ * Each element in the generated DrumChain is a DrumHit object generated using the makeHit function.
+ *
+ * @param {number} length - The length of the DrumChain to generate.
+ * @param {number[]} complexityLevels - The complexity levels to generate a DrumHit from.
+ * @returns {DrumChain} The generated DrumChain object.
+ */
+export const makeRandomChain = (length: number, complexityLevels: number[]): DrumChain =>
+  Array.from({ length }, () => makeHit(complexityLevels)) as DrumChain

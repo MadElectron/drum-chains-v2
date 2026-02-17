@@ -1,5 +1,6 @@
 <template>
   <div class="grid">
+    <!-- TODO: Hand-with-drumstick icon -->
     <DrumChainElement
       class="arm"
       :active="isActive(idx)"
@@ -7,6 +8,7 @@
       :key="idx"
       :char="el"
     />
+    <!-- TODO: Foot icon -->
     <DrumChainElement
       class="leg"
       :active="isActive(idx)"
@@ -34,7 +36,7 @@ const legs = computed<LimbCombination[]>(() => separateLimb(props.chain as DrumC
 const store = usePlaybackStore()
 const { playback } = storeToRefs(store)
 
-const isActive = (idx: number): boolean => playback.value.active.el === idx
+const isActive = (idx: number): boolean => playback.value.active === idx
 
 onMounted(() => {
   play()

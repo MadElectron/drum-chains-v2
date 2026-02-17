@@ -4,11 +4,7 @@ import type { D } from 'vue-router/dist/index-Cu9B0wDz.mjs'
  *
  */
 export type Playback = {
-  active: {
-    col: number
-    el: number
-    chain: number
-  }
+  active: number
   isPlayed: boolean
   tempo: number
 }

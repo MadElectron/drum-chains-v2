@@ -1,30 +1,44 @@
 <template>
   <div class="grid">
-    <DrumChainElement class="arm" v-for="(el, idx) in arms" :key="idx" :char="el" />
-    <DrumChainElement class="leg" v-for="(el, idx) in legs" :key="idx" :char="el" />
+    <DrumChainElement
+      class="arm"
+      :active="isActive(idx)"
+      v-for="(el, idx) in arms"
+      :key="idx"
+      :char="el"
+    />
+    <DrumChainElement
+      class="leg"
+      :active="isActive(idx)"
+      v-for="(el, idx) in legs"
+      :key="idx"
+      :char="el"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { DrumChain, LimbChar, LimbCombination } from '@/types'
-import { computed } from 'vue'
+import type { DrumChain, LimbCombination } from '@/types'
+import { computed, onMounted } from 'vue'
 import DrumChainElement from '@/components/DrumChainElement.vue'
+import { usePlaybackStore } from '@/stores/playback'
+import { storeToRefs } from 'pinia'
+import { separateLimb } from '@/utils/helpers'
+import { play } from '@/composables/playback'
 
 const props = defineProps<{ chain: DrumChain | [] }>()
 
 const arms = computed<LimbCombination[]>(() => separateLimb(props.chain as DrumChain, 'arm'))
 const legs = computed<LimbCombination[]>(() => separateLimb(props.chain as DrumChain, 'leg'))
 
-const separateLimb = (chain: DrumChain, limb: 'arm' | 'leg'): LimbCombination[] => {
-  const idx = Number(limb === 'leg') as 0 | 1
+const store = usePlaybackStore()
+const { playback } = storeToRefs(store)
 
-  return chain.map((el) =>
-    el[idx].reduce(
-      (acc: LimbCombination, char: LimbChar) => (acc + char.toUpperCase()) as LimbCombination,
-      '',
-    ),
-  )
-}
+const isActive = (idx: number): boolean => playback.value.active.el === idx
+
+onMounted(() => {
+  play()
+})
 </script>
 
 <style lang="scss" scoped>

@@ -4,13 +4,12 @@
 
 <script setup lang="ts">
 import type { LimbCombination } from '@/types'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps<{
   char: LimbCombination
+  active: boolean
 }>()
-
-const active = ref(true)
 
 const charClass = computed<string>(() => props.char && `char-${props.char.toLowerCase()}`)
 </script>

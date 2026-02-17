@@ -2,6 +2,7 @@ import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Playback, DrumChain } from '@/types'
 import { makeHit } from '@/utils/hitModel'
+import { el } from 'element-plus/es/locales.mjs'
 
 export const usePlaybackStore = defineStore('playback', () => {
   const playback = reactive<Playback>({
@@ -21,5 +22,11 @@ export const usePlaybackStore = defineStore('playback', () => {
     currentChain.value = chain
   }
 
-  return { playback, currentChain, setCurrentChain }
+  const playNext = () => {
+    if (currentChain.value) {
+      playback.active.el = (playback.active.el + 1) % 4
+    }
+  }
+
+  return { playback, currentChain, setCurrentChain, playNext }
 })

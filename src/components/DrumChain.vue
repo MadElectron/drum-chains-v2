@@ -36,7 +36,8 @@ const legs = computed<LimbCombination[]>(() => separateLimb(props.chain as DrumC
 const store = useStore()
 const { playback } = storeToRefs(store)
 
-const isActive = (idx: number): boolean => props.playing && playback.value.active === idx
+const isActive = (idx: number): boolean =>
+  props.playing && playback.value.isPlayed && playback.value.active === idx
 </script>
 
 <style lang="scss" scoped>

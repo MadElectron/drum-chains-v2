@@ -1,9 +1,11 @@
 <template>
   <el-container direction="vertical">
     <h1>Играй!</h1>
-    <PlaybackControls @play="onPlay" @stop="onStop" @change="onChange" />
+
     <!-- Controls -->
-    <hr />
+    <PlaybackControls @play="onPlay" @stop="onStop" @loop="onLoop" @change="onChange" />
+
+    <!-- Chains -->
     <div class="grid">
       <DrumChain v-if="currentChain" :chain="currentChain" :class="{ bottom }" playing />
       <DrumChain v-if="nextChain" :chain="nextChain" :class="{ next }" :style="style" />
@@ -44,9 +46,12 @@ const onPlay = (): void => {
 const onStop = (): void => {
   stop(playbackTimer.value as Timeout)
 }
+const onLoop = (): void => {
+  store.toggleLoop()
+}
 const onChange = (value: number): void => {
   if (value >= min || value <= max) {
-    store.setTempo(value)
+    playback.value.tempo = value
     stop(playbackTimer.value as Timeout)
     playbackTimer.value = play()
   }

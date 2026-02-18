@@ -9,7 +9,6 @@ export function play(): Timeout {
 
   const delay = computed<number>(() => (60 / playback.value.tempo) * 1000)
 
-  console.log(delay.value)
   return setInterval(() => {
     store.playNext()
   }, delay.value)

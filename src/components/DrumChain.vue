@@ -22,7 +22,6 @@
 <script setup lang="ts">
 import type { DrumChain, LimbCombination } from '@/types'
 import { computed } from 'vue'
-import DrumChainElement from '@/components/DrumChainElement.vue'
 import { useStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { separateLimb } from '@/utils/helpers'

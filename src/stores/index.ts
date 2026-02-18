@@ -15,29 +15,28 @@ export const useStore = defineStore('playback', () => {
   const currentChain = ref<DrumChain | null>(null)
   const nextChain = ref<DrumChain | null>(null)
 
-  const initChains = () => {
-    currentChain.value = makeRandomChain(4, [1, 2])
-    nextChain.value = makeRandomChain(4, [1, 2])
+  const setNextChain = (): void => {
+    nextChain.value = playback.loop ? currentChain.value : makeRandomChain(4, [1, 2])
   }
-  const popChain = () => {
+  const initChains = (): void => {
+    currentChain.value = makeRandomChain(4, [1, 2])
+    setNextChain()
+  }
+  const popChain = (): void => {
     currentChain.value = nextChain.value
-    nextChain.value = makeRandomChain(4, [1, 2])
+    setNextChain()
     playback.count++
   }
-
-  const playNext = () => {
+  const playNext = (): void => {
     if (currentChain.value) {
       playback.active = (playback.active + 1) % 4
-
-      if (playback.active === 0) {
-        popChain()
-      }
+      !playback.active && popChain()
     }
   }
-
-  const setTempo = (value: number) => {
-    playback.tempo = value
+  const toggleLoop = (): void => {
+    playback.loop = !playback.loop
+    setNextChain()
   }
 
-  return { playback, currentChain, nextChain, initChains, popChain, playNext, setTempo }
+  return { playback, currentChain, nextChain, initChains, popChain, playNext, toggleLoop }
 })

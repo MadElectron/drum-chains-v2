@@ -6,9 +6,7 @@
       <PlayPauseButton @click="onPlayPauseClick" />
 
       <!-- Loop -->
-      <!-- <el-button text>
-        <font-awesome-icon icon="fa-solid fa-rotate" />
-      </el-button> -->
+      <LoopButton @click="onLoopClick" />
     </el-button-group>
     <!-- Input -->
     <el-form-item label="BPM:">
@@ -21,7 +19,6 @@
 import { ref, watch } from 'vue'
 import { useStore } from '@/stores'
 import { storeToRefs } from 'pinia'
-import PlayPauseButton from './controls/PlayPauseButton.vue'
 import { playback as config } from '@/config'
 
 const { min, max } = config.tempo
@@ -29,6 +26,7 @@ const { min, max } = config.tempo
 const emit = defineEmits<{
   (e: 'play'): void
   (e: 'stop'): void
+  (e: 'loop'): void
   (e: 'change', value: number): void
 }>()
 const store = useStore()
@@ -39,6 +37,9 @@ const tempo = ref<number>(60)
 const onPlayPauseClick = () => {
   playback.value.isPlayed ? emit('stop') : emit('play')
   playback.value.isPlayed = !playback.value.isPlayed
+}
+const onLoopClick = () => {
+  emit('loop')
 }
 
 watch(tempo, (value: number) => {

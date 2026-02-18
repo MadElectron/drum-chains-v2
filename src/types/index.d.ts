@@ -1,8 +1,19 @@
 export type Timeout = ReturnType<typeof setInterval>
 
+/**
+ * @type Playback
+ *
+ * Describes drum chain playback process
+ * @member active - active chain element index (0-3)
+ * @member isPlayed - playback state (played/paused)
+ * @member loop - loop state
+ * @member count - played chains' counter
+ * @member tempo - playback speed, bpm
+ */
 export type Playback = {
   active: number
   isPlayed: boolean
+  loop: boolean
   count: number
   tempo: number
 }

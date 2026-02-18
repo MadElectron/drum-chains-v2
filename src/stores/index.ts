@@ -7,6 +7,7 @@ export const useStore = defineStore('playback', () => {
   const playback = reactive<Playback>({
     active: 0,
     isPlayed: false,
+    loop: false,
     count: 0,
     tempo: 60,
   })

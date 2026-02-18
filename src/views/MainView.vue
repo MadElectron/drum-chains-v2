@@ -1,6 +1,8 @@
 <template>
   <el-container direction="vertical">
     <h1>Играй!</h1>
+    <PlaybackControls @play="onPlay" @stop="onStop" @change="onChange" />
+    <!-- Controls -->
     <hr />
     <div class="grid">
       <DrumChain v-if="currentChain" :chain="currentChain" :class="{ bottom }" playing />
@@ -10,27 +12,45 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue'
-import { usePlaybackStore } from '@/stores/playback'
+import { ref, computed, onMounted } from 'vue'
+import { useStore } from '@/stores'
 import DrumChain from '@/components/DrumChain.vue'
+import PlaybackControls from '@/components/PlaybackControls.vue'
 import { storeToRefs } from 'pinia'
-import { play } from '@/composables/playback'
+import type { Timeout } from '@/types'
+import { play, stop } from '@/composables/playback'
+import { playback as config } from '@/config'
 
-const store = usePlaybackStore()
+const { min, max } = config.tempo
+
+const store = useStore()
 const { currentChain, nextChain, playback } = storeToRefs(store)
 
 const next = computed<boolean>(() => playback.value.active === 3)
 const bottom = computed<boolean>(() => playback.value.count % 2 !== 0)
 const style = computed<{ animationDuration: string }>(() => ({
-  animationDuration: `${playback.value.tempo / 60}s`,
+  animationDuration: `${60 / playback.value.tempo}s`,
 }))
 
-// Test
-// TODO: chain should start on play button press
+const playbackTimer = ref<Timeout | null>(null)
+
 onMounted(() => {
   store.initChains()
-  play()
 })
+
+const onPlay = (): void => {
+  playbackTimer.value = play()
+}
+const onStop = (): void => {
+  stop(playbackTimer.value as Timeout)
+}
+const onChange = (value: number): void => {
+  if (value >= min || value <= max) {
+    store.setTempo(value)
+    stop(playbackTimer.value as Timeout)
+    playbackTimer.value = play()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

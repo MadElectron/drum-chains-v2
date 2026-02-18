@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import type { Playback, DrumChain } from '@/types'
 import { makeRandomChain } from '@/utils/hitModel'
 
-export const usePlaybackStore = defineStore('playback', () => {
+export const useStore = defineStore('playback', () => {
   const playback = reactive<Playback>({
     active: 0,
     isPlayed: false,
@@ -34,5 +34,9 @@ export const usePlaybackStore = defineStore('playback', () => {
     }
   }
 
-  return { playback, currentChain, nextChain, initChains, popChain, playNext }
+  const setTempo = (value: number) => {
+    playback.tempo = value
+  }
+
+  return { playback, currentChain, nextChain, initChains, popChain, playNext, setTempo }
 })

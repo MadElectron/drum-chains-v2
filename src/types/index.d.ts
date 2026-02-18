@@ -1,8 +1,5 @@
-import type { D } from 'vue-router/dist/index-Cu9B0wDz.mjs'
+export type Timeout = ReturnType<typeof setInterval>
 
-/**
- *
- */
 export type Playback = {
   active: number
   isPlayed: boolean

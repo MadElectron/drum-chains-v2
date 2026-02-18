@@ -23,7 +23,7 @@
 import type { DrumChain, LimbCombination } from '@/types'
 import { computed } from 'vue'
 import DrumChainElement from '@/components/DrumChainElement.vue'
-import { usePlaybackStore } from '@/stores/playback'
+import { useStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { separateLimb } from '@/utils/helpers'
 
@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<{ chain: DrumChain | []; playing?: boolea
 const arms = computed<LimbCombination[]>(() => separateLimb(props.chain as DrumChain, 'arm'))
 const legs = computed<LimbCombination[]>(() => separateLimb(props.chain as DrumChain, 'leg'))
 
-const store = usePlaybackStore()
+const store = useStore()
 const { playback } = storeToRefs(store)
 
 const isActive = (idx: number): boolean => props.playing && playback.value.active === idx

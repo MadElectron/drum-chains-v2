@@ -66,7 +66,7 @@ const onChange = (value: number): void => {
 
 .next {
   animation:
-    1s ease-in fadeIn,
+    1s ease-in fadeIn forwards,
     1s ease-in colorize;
 }
 

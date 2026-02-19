@@ -11,6 +11,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AppIcon: typeof import('./src/components/AppIcon.vue')['default']
     DrumChain: typeof import('./src/components/DrumChain.vue')['default']
     DrumChainElement: typeof import('./src/components/DrumChainElement.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -22,6 +23,8 @@ declare module 'vue' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
     ElMain: typeof import('element-plus/es')['ElMain']
+    IconDrumstick: typeof import('./src/components/icons/IconDrumstick.vue')['default']
+    IconFootStomp: typeof import('./src/components/icons/IconFootStomp.vue')['default']
     LoopButton: typeof import('./src/components/controls/LoopButton.vue')['default']
     PlaybackControls: typeof import('./src/components/PlaybackControls.vue')['default']
     PlayPauseButton: typeof import('./src/components/controls/PlayPauseButton.vue')['default']

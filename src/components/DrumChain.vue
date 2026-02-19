@@ -1,6 +1,7 @@
 <template>
   <div class="grid" :class="{ playing }">
-    <!-- TODO: Hand-with-drumstick icon -->
+    <!-- Arms -->
+    <AppIcon icon="hand-drumstick" :size="48" />
     <DrumChainElement
       class="arm"
       :active="isActive(idx)"
@@ -8,7 +9,9 @@
       :key="idx"
       :char="el"
     />
-    <!-- TODO: Foot icon -->
+
+    <!-- Legs -->
+    <AppIcon icon="foot-stomp" :size="48" />
     <DrumChainElement
       class="leg"
       :active="isActive(idx)"
@@ -43,11 +46,24 @@ const isActive = (idx: number): boolean =>
 <style lang="scss" scoped>
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, fr);
+  align-items: center;
+  justify-items: center;
 
   &:not(.playing) {
     opacity: 0;
+  }
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    height: 3.5rem;
+    width: 3.5rem;
   }
 }
 </style>

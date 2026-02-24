@@ -41,13 +41,16 @@ const { playback } = storeToRefs(store)
 
 const isActive = (idx: number): boolean =>
   props.playing && playback.value.isPlayed && playback.value.active === idx
+
+// Slider
+// const time = computed(() => (playback.value.active / 4) * 1000 + playback.value.sustain)
 </script>
 
 <style lang="scss" scoped>
 .grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(2, fr);
+  grid-template-rows: repeat(3, fr);
   align-items: center;
   justify-items: center;
 
@@ -65,5 +68,10 @@ const isActive = (idx: number): boolean =>
     height: 3.5rem;
     width: 3.5rem;
   }
+}
+
+.span {
+  grid-column: span 4;
+  width: 100%;
 }
 </style>

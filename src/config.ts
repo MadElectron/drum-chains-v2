@@ -3,4 +3,5 @@ export const playback = {
     min: 30,
     max: 240,
   },
+  sustainPoints: 250,
 }

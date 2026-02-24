@@ -7,8 +7,15 @@
 
     <!-- Chains -->
     <div class="grid">
-      <DrumChain v-if="currentChain" :chain="currentChain" :class="{ bottom }" playing />
-      <DrumChain v-if="nextChain" :chain="nextChain" :class="{ next }" :style="style" />
+      <DrumChain v-if="currentChain" :chain="currentChain" :class="{ top, bottom }" playing />
+      <DrumChain
+        v-if="nextChain"
+        :chain="nextChain"
+        :class="{ next, top: bottom, bottom: top }"
+        :style="style"
+      />
+
+      <PlaybackSlider class="middle" />
     </div>
   </el-container>
 </template>
@@ -30,6 +37,7 @@ const { currentChain, nextChain, playback } = storeToRefs(store)
 
 const next = computed<boolean>(() => playback.value.active === 3)
 const bottom = computed<boolean>(() => playback.value.count % 2 !== 0)
+const top = computed<boolean>(() => !bottom.value)
 const style = computed<{ animationDuration: string }>(() => ({
   animationDuration: `${60 / playback.value.tempo}s`,
 }))
@@ -62,12 +70,24 @@ const onChange = (value: number): void => {
 .grid {
   display: grid;
   grid-template-rows: repeat(2, 1fr);
+
+  &:has(.middle) {
+    grid-template-rows: 1fr min-content 1fr;
+  }
 }
 
 .next {
   animation:
     1s ease-in fadeIn forwards,
     1s ease-in colorize;
+}
+
+.top {
+  order: 0;
+}
+
+.middle {
+  order: 1;
 }
 
 .bottom {

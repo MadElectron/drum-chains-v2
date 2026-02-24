@@ -10,6 +10,7 @@ export const useStore = defineStore('playback', () => {
     loop: false,
     count: 0,
     tempo: 60,
+    sustain: 0,
   })
 
   const currentChain = ref<DrumChain | null>(null)

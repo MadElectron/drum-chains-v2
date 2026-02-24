@@ -9,6 +9,7 @@ export type Timeout = ReturnType<typeof setInterval>
  * @member loop - loop state
  * @member count - played chains' counter
  * @member tempo - playback speed, bpm
+ * @member sustain - hit 'sustain' inside a single hit
  */
 export type Playback = {
   active: number
@@ -16,6 +17,7 @@ export type Playback = {
   loop: boolean
   count: number
   tempo: number
+  sustain: number
 }
 
 export type LimbChar = 'L' | 'R' | 'l' | 'r'
